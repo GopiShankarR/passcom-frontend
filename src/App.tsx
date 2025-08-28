@@ -5,7 +5,7 @@ import ResultsPanel from './components/ResultsPanel'
 import VizGraph from './components/VizGraph'
 import RechartsSummary from './components/RechartsSummary'
 import { useAppStore } from './store/useAppStore'
-import { postEvaluate, getHealthStatus } from './lib/api'
+import { postEvaluate, getHealthStatus, newIdempotencyKey } from './lib/api'
 import { uuidv4 } from './utils/uuid'
 import { useQuerySync } from './hooks/useQuerySync'
 
@@ -27,8 +27,8 @@ export default function App() {
     setSubmitting(true)
     setError(null)
     try {
-      const idk = uuidv4()
-      const res = await postEvaluate(profile, idk)
+      const key = newIdempotencyKey();
+      const res = await postEvaluate(profile, { idempotencyKey: key })
       setResult(res)
     } catch (e: any) {
       setError(e.message || 'Request failed')

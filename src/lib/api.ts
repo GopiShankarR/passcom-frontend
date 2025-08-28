@@ -71,3 +71,6 @@ export function evaluateProfile(
     timeoutMs: opts.timeoutMs ?? 20000,
   });
 }
+
+export const postEvaluate   = evaluateProfile;
+export const getHealthStatus = getHealth;
